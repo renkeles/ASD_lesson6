@@ -58,7 +58,7 @@ void bubbleSort(size_t** arr, size_t row, size_t col) {
 
 int main()
 {
-    srand(time(0));
+    srand(time(0u));
 
     const size_t row = 5;
     const size_t col = 5;
