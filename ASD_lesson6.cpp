@@ -1,5 +1,8 @@
 #include <iostream>
 #include <ctime>
+#include <cmath>
+
+//////////////////////////////////////////////////////////////////////////////
 
 size_t** Init2DArray(size_t** arr, const size_t row, const size_t col){
     arr = new size_t* [row];
@@ -77,9 +80,11 @@ void BubbleSort(size_t** arr, const size_t row, const size_t col){
     }
 }
 
-
+//////////////////////////////////////////////////////////////////////////////
 
 int main() {
+
+    //////////////////////////////////////////////////////////////////////////
 
     srand(time(0));
 
@@ -97,5 +102,49 @@ int main() {
     Print2DArray(arr, ROW, COL, WIDTH);
 
     DeInit2DArray(arr, ROW);
+
+    //////////////////////////////////////////////////////////////////////////
+
+    const size_t SIZE = 11;
+    size_t *arrTPK = new size_t[11];
+    std::cout << "Enter 11 numbers" << std::endl;
+    for(size_t i = 1; i <= SIZE; i++){
+        std::cout << "Enter " << i << " number: ";
+        std::cin >> arrTPK[i - 1];
+    }
+
+    for(size_t i = 0; i < SIZE; i++){
+        std::cout.width(5);
+        std::cout << arrTPK[i];
+    }
+    std::cout << std::endl;
+
+    for(size_t i = 0; i < SIZE / 2; i++){
+        Swap(&arrTPK[i], &arrTPK[SIZE - i - 1]);
+    }
+
+
+    for(size_t i = 0; i < SIZE; i++){
+        std::cout.width(5);
+        std::cout << arrTPK[i];
+    }
+    std::cout << std::endl;
+
+    for(size_t i = 0; i < SIZE; i++){
+        arrTPK[i] = sqrt(fabs(arrTPK[i])) + 5 * pow(arrTPK[i], 3);
+        if(arrTPK[i] > 400){
+            std::cout << "The number under the number " << i << " gave a result of more than 400" << std::endl;
+        }
+    }
+
+    for(size_t i = 0; i < SIZE; i++){
+        std::cout.width(5);
+        std::cout << arrTPK[i];
+    }
+    std::cout << std::endl;
+
+    delete[] arrTPK;
+    arrTPK = nullptr;
+
     return 0;
 }
