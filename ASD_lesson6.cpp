@@ -1,41 +1,63 @@
-﻿#include <iostream>
+#include <iostream>
 #include <ctime>
 
-void swap(size_t *a, size_t *b) {
-    size_t temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-size_t** init2Darray(size_t** arr, size_t row, size_t col) {
+size_t** Init2DArray(size_t** arr, const size_t row, const size_t col){
     arr = new size_t* [row];
-    for (size_t i = 0; i < row; i++) {
-        arr[i] = new size_t [col];
+    for(size_t i = 0; i < row; i++){
+        arr[i] = new size_t[col];
     }
     return arr;
 }
 
-void fill2Darray(size_t** arr, size_t row, size_t col) {
-    for (size_t i = 0; i < row; i++) {
-        for (size_t j = 0; j < col; j++) {
-            arr[i][j] = (rand() % 9 + 1);
+void Fill2DArray(size_t** arr, const size_t row, const size_t col, const size_t border){
+    for(size_t i = 0; i < row; i++){
+        for(size_t j = 0; j < col; j++){
+            arr[i][j] = (rand() % border + 1);
         }
     }
 }
 
-void print2Darray(size_t** arr, size_t row, size_t col) {
-    for (size_t i = 0; i < row; i++) {
-        for (size_t j = 0; j < col; j++) {
-            std::cout.width(5);
+void Print2DArray(size_t** arr, const size_t row, const size_t col, const size_t width){
+    for(size_t i = 0; i < row; i++){
+        for(size_t j = 0; j < col; j++){
+            std::cout.width(width);
             std::cout << arr[i][j];
+            //printf("%5d",arr[i][j]);
         }
         std::cout << std::endl;
     }
 }
 
+void Print2DArrayPointer(size_t** arr, const size_t row, const size_t col){
+    size_t** ptr = (size_t**)arr;
+    size_t** end = (size_t**)arr + row;
 
+    size_t* e;
+    while(ptr != end){
+        e = (size_t*)*ptr + col;
+        for(size_t* i = *ptr; i != e; ){
+            printf("%5d",*i++);
+        }
+        std::cout << std::endl;
+        ++ptr;
+    }
+}
 
-void bubbleSort(size_t** arr, size_t row, size_t col) {
+void DeInit2DArray(size_t** arr, const size_t row){
+    for(size_t i = 0; i < row; i++){
+        delete[] arr[i];
+    }
+    delete[] arr;
+    arr = nullptr;
+}
+
+void Swap(size_t *a, size_t *b){
+    size_t temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void BubbleSort(size_t** arr, const size_t row, const size_t col){
     const size_t max = row * col;
     for (size_t k = 0; k < max; k++) {
         for (size_t i = 0; i < row; i++) {
@@ -43,12 +65,11 @@ void bubbleSort(size_t** arr, size_t row, size_t col) {
                 if (!(i == row - 1 && j == col - 1)) {
                     if (j == col - 1) {
                         if (arr[i][j] > arr[i + 1][0]) {
-                            swap(&arr[i][j], &arr[i + 1][0]);
+                            Swap(&arr[i][j], &arr[i + 1][0]);
                             continue;
                         }
-                    }
-                    if (arr[i][j] > arr[i][j + 1]) {
-                        swap(&arr[i][j], &arr[i][j + 1]);
+                    } else if (arr[i][j] > arr[i][j + 1]) {
+                        Swap(&arr[i][j], &arr[i][j + 1]);;
                     }
                 }
             }
@@ -56,25 +77,25 @@ void bubbleSort(size_t** arr, size_t row, size_t col) {
     }
 }
 
-int main()
-{
-    srand(time(0u));
 
-    const size_t row = 5;
-    const size_t col = 5;
-    
-    size_t** arr;
-    //init2Darray(arr, row, col);
-    arr = new size_t * [row];
-    for (size_t i = 0; i < row; i++) {
-        arr[i] = new size_t[col];
-    }
 
-    fill2Darray(arr, row, col);
-    print2Darray(arr, row, col);
-    bubbleSort(arr, row, col);
+int main() {
+
+    srand(time(0));
+
+    const size_t ROW = 3;
+    const size_t COL = 5;
+    const size_t BORDER = 9;
+    const size_t WIDTH = 5;
+
+    size_t** arr = Init2DArray(arr, ROW, COL);
+    Fill2DArray(arr, ROW, COL, BORDER);
+    Print2DArray(arr, ROW, COL, WIDTH);
+    BubbleSort(arr, ROW, COL);
     std::cout << std::endl;
-    print2Darray(arr, row, col);
+    //Print2DArrayPointer(arr, ROW, COL);
+    Print2DArray(arr, ROW, COL, WIDTH);
 
+    DeInit2DArray(arr, ROW);
+    return 0;
 }
-
