@@ -105,6 +105,8 @@ int main() {
 
     //////////////////////////////////////////////////////////////////////////
 
+
+    //init
     const size_t SIZE = 11;
     size_t *arrTPK = new size_t[11];
     std::cout << "Enter 11 numbers" << std::endl;
@@ -113,23 +115,26 @@ int main() {
         std::cin >> arrTPK[i - 1];
     }
 
+    //print
     for(size_t i = 0; i < SIZE; i++){
         std::cout.width(5);
         std::cout << arrTPK[i];
     }
     std::cout << std::endl;
 
+    //reverse
     for(size_t i = 0; i < SIZE / 2; i++){
         Swap(&arrTPK[i], &arrTPK[SIZE - i - 1]);
     }
 
-
+    //print
     for(size_t i = 0; i < SIZE; i++){
         std::cout.width(5);
         std::cout << arrTPK[i];
     }
     std::cout << std::endl;
 
+    //algoritm
     for(size_t i = 0; i < SIZE; i++){
         arrTPK[i] = sqrt(fabs(arrTPK[i])) + 5 * pow(arrTPK[i], 3);
         if(arrTPK[i] > 400){
@@ -137,6 +142,7 @@ int main() {
         }
     }
 
+    //print
     for(size_t i = 0; i < SIZE; i++){
         std::cout.width(5);
         std::cout << arrTPK[i];
